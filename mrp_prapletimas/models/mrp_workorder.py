@@ -12,10 +12,7 @@ class MrpWorkorder(models.Model):
     @classmethod
     def pertempimas(cls, seqpries, seqpo, id, env):
 
-        print(MrpWorkorder.eiliskumas)
-        print(f"prieš įrašymą: {MrpWorkorder.veiksmai}")
         MrpWorkorder.veiksmai.append([seqpries, seqpo, id])
-        print(f"po įrašymo: {MrpWorkorder.veiksmai}")
 
         if len(MrpWorkorder.veiksmai) == len(MrpWorkorder.eiliskumas[0]):
             MrpWorkorder.jau_perkelta = True
@@ -23,7 +20,7 @@ class MrpWorkorder(models.Model):
         if MrpWorkorder.jau_perkelta == False:
             suma = 0
             prideta = 0
-            print(suma)
+
             for pakeitimas in MrpWorkorder.veiksmai:
                 skirtumas = pakeitimas[0] - pakeitimas[1]
                 if skirtumas != 0:
@@ -31,8 +28,8 @@ class MrpWorkorder(models.Model):
                     prideta += 1
 
             if suma == 0 and prideta > 1:
-                print(suma)
                 MrpWorkorder.jau_perkelta = True
+
         if MrpWorkorder.jau_perkelta == True:
             for i, pakeitimas in enumerate(MrpWorkorder.veiksmai):
 
@@ -59,7 +56,6 @@ class MrpWorkorder(models.Model):
             MrpWorkorder.perkelto_nr = None
             MrpWorkorder.jau_perkelta = False
 
-        print(MrpWorkorder.veiksmai)
 
 
     @api.model
@@ -74,8 +70,7 @@ class MrpWorkorder(models.Model):
                 self.eiliskumas.append(self.search(domain))
 
             self.pertempimas(seqpries, seqpo, self.id, self.env)
-            print(self.search(domain))
-
+            
             rez = super(MrpWorkorder, self).write(vals)
         else:
             rez = super(MrpWorkorder, self).write(vals)
