@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+
+        <record id="view_mrp_workorder_kanban_inherited" model="ir.ui.view">
+            <field name="name">mrp.production.work.order.kanban.inherited</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.workcenter_line_kanban"/>
+
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="default_order">sequence asc, id asc</attribute>
+                </xpath>
+
+                <xpath expr="//kanban[@class='oe_background_grey o_kanban_dashboard o_mrp_workorder_kanban']" position="inside">
+                        <field name="sequence" widget="handle"/>
+                </xpath>
+
+                <xpath expr="//div[@class='o_kanban_record_bottom']" position="inside">
+                    <div class="oe_kanban_footer">
+                        <button name="button_start" type="object" string="Start" class="btn-success"/>
+
+                        <button name="button_finish" type="object" string="Finish" class="btn-success"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
